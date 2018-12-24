@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.huc.service.base.UserService">
+    <select id="listUsers" parameterType="map" resultType="com.huc.domain.base.UserBean">
+      SELECT
+        id,
+        username,
+        password,
+        department,
+        phone
+      FROM sys_user
+      WHERE 1=1
+        <if test="username!=null and username!=''">
+           AND  username=#{username}
+        </if>
+        <if test="password!=null and password!=''">
+            AND  password=#{password}
+        </if>
+    </select>
+    <insert id="addUser" parameterType="com.huc.domain.base.UserBean">
+        INSERT INTO sys_user(
+            id,
+            username,
+            password,
+            department,
+            phone
+        )values (
+          #{id},
+          #{username},
+          #{password},
+          #{department},
+          #{phone}
+        )
+    </insert>
+    <insert id="editUser" parameterType="com.huc.domain.base.UserBean">
+        UPDATE  sys_user
+        SET
+        username=#{username},
+        password=#{password},
+        department=#{department},
+        phone=#{phone}
+        WHERE id=#{id}
+    </insert>
+    <delete id="delUser" parameterType="String">
+        DELETE  FROM sys_user WHERE id=#{id}
+    </delete>
+</mapper>

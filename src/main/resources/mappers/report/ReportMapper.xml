@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.huc.service.report.PmsReportService">
+    <select id="listPmsReportList" parameterType="map" resultType="com.huc.domain.report.PmsReport">
+        SELECT
+        b.username,
+        SUM(a.time) AS sumTime,
+        SUM(a.this_time_score) AS sumScore
+        FROM pms_operation_record a,sys_user b
+        WHERE 1=1
+        <if test="beginDate!=null and beginDate!=''">
+            a.operation_date>=#{beginDate}
+        </if>
+        <if test="endDate!=null and endDate!=''">
+            AND a.operation_date&lt;=#{endDate}
+        </if>
+        AND a.user_id = b.id
+        GROUP BY b.username
+    </select>
+</mapper>

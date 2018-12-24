@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.huc.service.operation.OperationRecordService">
+    <select id="listOperationRecords" parameterType="map" resultType="com.huc.domain.operation.OperationRecordBean">
+      SELECT
+        A.id,
+        B.username,
+        A.user_id as userId,
+        A.department,
+        A.operating_room as operatingRoom,
+        A.operation_date as operationDate,
+        A.patient_name as patientName,
+        A.in_room_time as inRoomTime,
+        A.out_room_time as  outRoomTime,
+        A.time,
+        A.procedure,
+        A.level_id as levelId,
+        C.level AS levelName,
+        A.qj_nurse as qjNurse,
+        A.xh_nurse as xhNurse,
+        A.this_time_score as thisTimeScore
+      FROM pms_operation_record A,sys_user B,sys_level C
+      WHERE 1=1
+        AND A.user_id=B.id
+        AND A.level_id= C.id
+        <if test="beginDate!=null and beginDate!=''">
+            AND  A.operation_date>=#{beginDate}
+        </if>
+        <if test="endDate!=null and endDate!=''">
+            AND  A.operation_date&lt;=#{endDate}
+        </if>
+    </select>
+    <insert id="addOperationRecord" parameterType="com.huc.domain.operation.OperationRecordBean">
+        INSERT INTO pms_operation_record(
+        id,
+        user_id,
+        department,
+        operating_room,
+        operation_date,
+        patient_name,
+        in_room_time,
+        out_room_time,
+        `time`,
+        `procedure`,
+        level_id,
+        qj_nurse,
+        xh_nurse,
+        this_time_score
+        )values (
+            #{id},
+            #{userId},
+            #{department},
+            #{operatingRoom},
+            #{operationDate},
+            #{patientName},
+            #{inRoomTime},
+            #{outRoomTime},
+            #{time},
+            #{procedure},
+            #{levelId},
+            #{qjNurse},
+            #{xhNurse},
+            #{thisTimeScore}
+        )
+    </insert>
+</mapper>

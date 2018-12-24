@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.huc.service.base.LevelService">
+    <select id="listLevels" parameterType="map" resultType="com.huc.domain.base.LevelBean">
+      SELECT
+        id,
+        level AS levelName,
+        base_score AS levelScore,
+        base_time AS baseTime,
+        add_score AS addScore
+      FROM sys_level
+      WHERE 1=1
+        <if test="levelName!=null and levelName!=''">
+           AND  level_name=#{levelName}
+        </if>
+    </select>
+    <select id="getLevelById" parameterType="long" resultType="com.huc.domain.base.LevelBean">
+        SELECT
+        id,
+        level AS levelName,
+        base_score AS levelScore,
+        base_time AS baseTime,
+        add_score AS addScore
+        FROM sys_level
+        WHERE id =#{id}
+    </select>
+    <insert id="addLevel" parameterType="com.huc.domain.base.LevelBean">
+        INSERT INTO sys_level(
+        id,
+        level,
+        base_score,
+        base_time,
+        add_score
+        )values (
+          #{id},
+          #{levelName},
+          #{levelScore},
+          #{baseTime},
+          #{addScore}
+        )
+    </insert>
+    <delete id="delLevel" parameterType="String">
+        DELETE  FROM sys_level WHERE id=#{id}
+    </delete>
+</mapper>
