@@ -219,7 +219,7 @@
 				this.listLoading = true;
 				//NProgress.start();
 				httpPost("listOperationRecord",para,this).then((res) => {
-					this.total = res.total;
+					this.total = res.totalCount;
 					this.records = res.list;
 					this.listLoading = false;
 					//NProgress.done();
