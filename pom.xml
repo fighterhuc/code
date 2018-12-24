@@ -169,6 +169,9 @@
         <configuration>
           <!--war包名称-->
           <warSourceDirectory>${basedir}/src/main/webapp</warSourceDirectory>
+          <!--warSourceExcludes是在编译周期进行完成后从src/main/webapp目录复制文件时忽略，-->
+              <!--而packagingExcludes是在复制webapp目录完成后打包时忽略target/mywebapp-1.0.4 文件夹的文件-->
+          <warSourceExcludes>vueadmin/**</warSourceExcludes>
         </configuration>
       </plugin>
       <plugin>
